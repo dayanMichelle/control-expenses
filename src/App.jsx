@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { Header } from './components/Header'
 import { ListExpenses } from './components/ListExpenses'
 import { Modal } from './components/Modal'
@@ -11,9 +11,20 @@ function App() {
   const [modal, setModal] = useState(false)
   const [animateModal, setAnimateModal] = useState(false)
   const [expenses, setExpenses] = useState([])
+  const [spentEdit, setSpent] = useState({})
+
+  useEffect(() => {
+    if(Object.keys(spentEdit).length > 0){
+      setModal(true)
+      setTimeout(() => {
+        setAnimateModal(true)
+      }, 500);
+    }
+  },[spentEdit])
 
   const handleNewExpense = () => {
     setModal(true)
+    setSpent({})
     setTimeout(() => {
       setAnimateModal(true)
     }, 500);
@@ -27,8 +38,9 @@ function App() {
 
   return (
 
-    <div className={modal && 'fijar'}>
+    <div className={modal ? 'fijar' : ''}>
       <Header
+      expenses={expenses}
         budget={budget}
         setBudget={setBudget}
         setIsValidBudget={setIsValidBudget}
@@ -39,6 +51,7 @@ function App() {
         <main>
           <ListExpenses 
           expenses={expenses}
+          setSpent={setSpent}
           />
         </main>
           <div className='nuevo-gasto'>
@@ -55,6 +68,7 @@ function App() {
         animateModal={animateModal}
         setAnimateModal={setAnimateModal}
         saveExpense={saveExpense}
+        spentEdit={spentEdit}
       />}
     </div>
   )

@@ -9,7 +9,6 @@ export const Modal = ({
     spentEdit
 }) => {
 
-
     const [expense, setExpense] = useState({
         name: '',
         amount: 0,
@@ -17,10 +16,12 @@ export const Modal = ({
     })
 
     const [message, setMessage] = useState('')
+    const [id, setId] = useState('')
 
     useEffect(() => {
         if(Object.keys(spentEdit).length > 0){
             setExpense(spentEdit)
+            setId(spentEdit.id)
         }
     }),[]
 
@@ -50,10 +51,10 @@ export const Modal = ({
             </div>
             <form action="" onSubmit={handleSubmit}
                 className={`formulario ${animateModal ? 'animar' : 'cerrar'}`}>
-                <legend>NEW EXPENSE</legend>
+                <legend>{spentEdit.name ? 'Edit' : 'Add'}</legend>
                 {message && <Message type='error'>{message}</Message>}
                 <div className="campo">
-                    <label htmlFor="name">Name Expense</label>
+                    <label htmlFor="name"></label>
                     <input type="text"
                         id='name'
                         placeholder='Expense name'
@@ -88,7 +89,7 @@ export const Modal = ({
                         <option value="subscriptions">Subscriptions</option>
                     </select>
                 </div>
-                <input type="submit" value='Add' />
+                <input type="submit" value={spentEdit.name ? 'Edit' : 'Add'} />
             </form>
         </div>
     )

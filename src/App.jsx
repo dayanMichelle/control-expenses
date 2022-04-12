@@ -30,6 +30,8 @@ function App() {
     }, 500);
   }
   const saveExpense = expense => {
+    console.log(expense)
+    return
     expense.id = getId()
     expense.date = Date.now()
     setExpenses([...expenses, expense])
